@@ -10,7 +10,12 @@ public class Worker {
 	}
 	//要求进行工作人员初始化，当年龄小于18或工资低于2000时，进行异常提示，提示内容参阅测试用例
 	public Worker(String name, int age, int salary, String department) {
-		
+		if(salary < 2000)
+			throw new IllegalArgumentException("age must be greater than 18 and salary must be greater than 2000.");
+		this.name = name;
+		this.age = age;
+		this.salary = salary;
+		this.department = department;
 	}
 
 	public String getName() {
@@ -47,6 +52,8 @@ public class Worker {
 	
 	//展示员工的基本信息
 	public String show() {
-		return null;
-	}
+		//exp: "My name is s ; age : 21 ; salary : 8000 ; department : Editor."
+		return "My name is " + this.name + " ; age : " + this.age
+				+ " ; salary : " + this.salary + " ; department : " + this.department;
+}
 }
