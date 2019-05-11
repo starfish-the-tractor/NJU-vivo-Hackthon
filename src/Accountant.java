@@ -56,6 +56,31 @@ public class Accountant extends Worker {
      * @param password
      */
     public  int checkPassword(){
+    	// part1
+		int count = 0;
+		boolean lowerCount = false;
+		boolean upperCount = false;
+		boolean numbercount = false;
+		boolean errorCount = false;
+		for(int i=0;i<this.password.length();i++){
+			var value = Integer.getInteger(this.password.substring(i,i+1));
+			if(value >=65 && value<=90){
+				upperCount = true;
+			}else if(value>=97 && value<=122){
+				lowerCount = true;
+			}else if(value >=48 && value<=57){
+				numbercount = true;
+			}else{
+				errorCount = true;
+			}
+		}
+		if(this.password.length() < 8){
+
+		}else if(this.password.length() > 20){
+
+		}else{
+			// next
+		}
 		return 0;
 
     }
