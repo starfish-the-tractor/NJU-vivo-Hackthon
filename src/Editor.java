@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.regex.*;
 
 
 public class Editor extends Worker {
@@ -6,12 +8,12 @@ public class Editor extends Worker {
 	public Editor() {
 
 	}
-	
+
 	//初始化Editor
 	public Editor(String name, int age, int salary) {
 
 	}
-		
+
 	/**
      * 文本对齐
      *
@@ -22,34 +24,49 @@ public class Editor extends Worker {
      * 每行最后一个有效字符必须为标点符号
      *
      * 示例：
-     * 
+     *
      * String：给定一段字符串，重新排版，使得每行恰好有32个字符，并输出至控制台首行缩进，其余行数左对齐，每个短句不超过32个字符。
-     * 
-     * 控制台输出:    
-     *     给定一段字符串，重新排版，  
+     *
+     * 控制台输出:
+     *     给定一段字符串，重新排版，
      * 使得每行恰好有32个字符，
-     * 并输出至控制台首行缩进，         
+     * 并输出至控制台首行缩进，
      * 其余行数左对齐，
      * 每个短句不超过32个字符。
-     * 
+     *
      */
     public void  textExtraction(String data){
-
+        var pattern =  Pattern.compile("(.+(\\p{P}|\\u3002|\\uff1f|\\uff01|\\uff0c|\\u3001|\\uff1b|\\uff1a|\\u201c|\\u201d|\\u2018|\\u2019|\\uff08|\\uff09|\\u300a|\\u300b|\\u3008|\\u3009|\\u3010|\\u3011|\\u300e|\\u300f|\\u300c|\\u300d|\\ufe43|\\ufe44|\\u3014|\\u3015|\\u2026|\\u2014|\\uff5e|\\ufe4f|\\uffe5))");
+        var matcher  = pattern.matcher(data);
+        StringBuilder result = new StringBuilder("    ");
+        int count = 4;
+        while(matcher.find()){
+            String part = matcher.group();
+            if(count + part.length() > 32){// 假设中文字长为2
+                System.out.println(result + String.join("", Collections.nCopies(32 - count, " ")));
+                result = new StringBuilder(part);
+                count = part.length();
+            }else{
+                result.append(part);
+                count += part.length();
+            }
+        }
+        System.out.println(result);
     }
-    
+
 
     /**
      * 标题排序
-     * 
+     *
      * 将给定的新闻标题按照拼音首字母进行排序，
      * 首字母相同则按第二个字母，如果首字母相同，则首字拼音没有后续的首字排在前面，如  鹅(e)与二(er)，
      *            以鹅为开头的新闻排在以二为开头的新闻前。
      * 如果新闻标题第一个字的拼音完全相同，则按照后续单词进行排序。如 新闻1为 第一次...  新闻2为 第二次...，
      *            则新闻2应该排在新闻1之前。
      * 示例：
-     *            
+     *
      * newsList：我是谁；谁是我；我是我
-     * 
+     *
      * return：谁是我；我是谁；我是我；
      *
      * @param newsList
@@ -62,22 +79,22 @@ public class Editor extends Worker {
 
     /**
      * 热词搜索
-     * 
+     *
      * 根据给定的新闻内容，找到文中出现频次最高的一个词语，词语长度最少为2（即4个字节），最多为10（即20个字节），且词语中不包含标点符号，可以出现英文，同频词语选择在文中更早出现的词语。
-     * 
+     *
      * 示例：
-     * 
+     *
      * String: 今天的中国，呈现给世界的不仅有波澜壮阔的改革发展图景，更有一以贯之的平安祥和稳定。这平安祥和稳定的背后，凝聚着中国治国理政的卓越智慧，也凝结着中国公安民警的辛勤奉献。
-     * 
+     *
      * return：中国
-     * 
+     *
      * @param newsContent
      */
     public String findHotWords(String newsContent){
 		return newsContent;
 
     }
-    
+
     /**
     *
     *相似度对比
