@@ -49,7 +49,7 @@ public class Worker {
 	public void setDepartment(String department) {
 		this.department = department;
 	}
-	
+
 	//展示员工的基本信息
 	public String show() {
 		//exp: "My name is s ; age : 21 ; salary : 8000 ; department : Editor."

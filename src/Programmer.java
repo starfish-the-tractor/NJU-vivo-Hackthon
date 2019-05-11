@@ -9,6 +9,9 @@ public class Programmer extends Worker {
 	// Programmer类的初始化
 	public Programmer(String name, int age, int salary, String language,
 			String type) {
+		super(name, age, salary, "Programmer");
+		this.language = language;
+		this.type = type;
 	}
 
 	public String getLanguage() {
@@ -29,7 +32,40 @@ public class Programmer extends Worker {
 
 	// 按照规则计算当月的奖金
 	public String getBonus(int overtime) {
-		return null;
+		//发人员每月奖金为基本工资的20%，加班一次补贴100，加班补贴上限500；
+		// 测试人员每月奖金为基本工资的15%，加班一次补贴150，上限1000；
+		// UI设计人员每月奖金为基本工资的25%，加班一次补贴50，上限300。（保留2位小数）
+		double bonus = 0;
+		double plus = 0;
+		switch (type){
+			case "UI":
+				bonus = salary * 0.25;
+				plus = 50 * overtime;
+				if(plus > 300) plus = 300;
+				bonus = bonus + plus;
+				break;
+			case "Test":
+				bonus = salary * 0.15;
+				plus = 150 * overtime;
+				if(plus > 1000) plus = 1000;
+				bonus = bonus + plus;
+				break;
+			case "Develop":
+				bonus = salary * 0.20;
+				plus = 200 * overtime;
+				if(plus > 500) plus = 500;
+				bonus = bonus + plus;
+				break;
+			default:
+		}
+
+		StringBuilder res = new StringBuilder(String.format("%.2f", bonus));
+		int i = res.lastIndexOf(".");
+		for(int j = 0; i >= 0; i--){
+			if(j % 3 == 0 && j != 0) res.insert(i, ",");
+			j++;
+		}
+		return res.toString();
 	}
 
 	// 展示基本信息
